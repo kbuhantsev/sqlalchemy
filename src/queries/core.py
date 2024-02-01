@@ -27,7 +27,7 @@ def create_tables() -> None:
     sync_engine.echo = True
 
 
-def insert_data():
+def insert_data() -> None:
     with sync_engine.connect() as conn:
         # stmt = """INSERT INTO workers (username) VALUES
         # ('Bobr'),
