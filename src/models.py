@@ -1,6 +1,6 @@
 import datetime
-from sqlalchemy import ForeignKey, text
-from database import Base, str_256
+from sqlalchemy import Column, ForeignKey, Integer, String, Table, text
+from database import Base, str_256, metadata_obj
 from sqlalchemy.orm import mapped_column, Mapped
 from typing import Annotated
 import enum
@@ -41,9 +41,9 @@ class ResumesOrm(Base):
 
 
 # Императивный подход
-# workers_table = Table(
-#     "workers",
-#     metadata_obj,
-#     Column("id", Integer, primary_key=True),
-#     Column("username", String),
-# )
+workers_table = Table(
+    "workers",
+    metadata_obj,
+    Column("id", Integer, primary_key=True),
+    Column("username", String),
+)
