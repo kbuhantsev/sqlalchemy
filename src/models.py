@@ -1,5 +1,5 @@
 import datetime
-from sqlalchemy import Column, ForeignKey, Integer, String, Table, text
+from sqlalchemy import TIMESTAMP, Column, Enum, ForeignKey, Integer, String, Table, text
 from database import Base, str_256, metadata_obj
 from sqlalchemy.orm import mapped_column, Mapped
 from typing import Annotated
@@ -12,7 +12,7 @@ created_at = Annotated[
 updated_at = Annotated[
     datetime.datetime,
     mapped_column(
-        default=text("TIMEZONE('utc', now());"), onupdate=datetime.datetime.utcnow
+        default=text("TIMEZONE('utc', now())"), onupdate=datetime.datetime.utcnow
     ),
 ]
 
@@ -20,6 +20,7 @@ updated_at = Annotated[
 class WorkLoad(enum.Enum):
     parttime = "parttime"
     worktime = "worktime"
+    fulltime = "fulltime"
 
 
 # Декларативный подход
@@ -46,4 +47,21 @@ workers_table = Table(
     metadata_obj,
     Column("id", Integer, primary_key=True),
     Column("username", String),
+)
+
+resumes_table = Table(
+    "resumes",
+    metadata_obj,
+    Column("id", Integer, primary_key=True),
+    Column("title", String(256)),
+    Column("compensation", Integer, nullable=True),
+    Column("workload", Enum(WorkLoad)),
+    Column("worker_id", ForeignKey("workers.id", ondelete="CASCADE")),
+    Column("created_at", TIMESTAMP, server_default=text("TIMEZONE('utc', now())")),
+    Column(
+        "updated_at",
+        TIMESTAMP,
+        server_default=text("TIMEZONE('utc', now())"),
+        onupdate=datetime.datetime.utcnow,
+    ),
 )
