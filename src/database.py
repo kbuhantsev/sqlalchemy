@@ -17,7 +17,7 @@ async_engine = create_async_engine(
 )
 
 session_factory = sessionmaker(sync_engine)
-async_session = sessionmaker(async_engine)
+async_session_factory = sessionmaker(async_engine)
 
 str_256 = Annotated[str, 256]
 

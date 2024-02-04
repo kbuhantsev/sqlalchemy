@@ -17,13 +17,13 @@ updated_at = Annotated[
 ]
 
 
-class WorkLoad(enum.Enum):
+# Декларативный подход
+class Workload(enum.Enum):
     parttime = "parttime"
     worktime = "worktime"
     fulltime = "fulltime"
 
 
-# Декларативный подход
 class WorkersOrm(Base):
     __tablename__ = "workers"
     id: Mapped[intpk]
@@ -35,7 +35,7 @@ class ResumesOrm(Base):
     id: Mapped[intpk]
     title: Mapped[str_256]
     compensation: Mapped[int | None]
-    workload: Mapped[WorkLoad]
+    workload: Mapped[Workload]
     worker_id: Mapped[int] = mapped_column(ForeignKey("workers.id", ondelete="CASCADE"))
     created_at: Mapped[created_at]
     updated_at: Mapped[updated_at]
@@ -55,7 +55,7 @@ resumes_table = Table(
     Column("id", Integer, primary_key=True),
     Column("title", String(256)),
     Column("compensation", Integer, nullable=True),
-    Column("workload", Enum(WorkLoad)),
+    Column("workload", Enum(Workload)),
     Column("worker_id", ForeignKey("workers.id", ondelete="CASCADE")),
     Column("created_at", TIMESTAMP, server_default=text("TIMEZONE('utc', now())")),
     Column(
