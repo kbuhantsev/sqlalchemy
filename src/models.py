@@ -1,5 +1,16 @@
 import datetime
-from sqlalchemy import TIMESTAMP, Column, Enum, ForeignKey, Integer, String, Table, text
+from sqlalchemy import (
+    TIMESTAMP,
+    Column,
+    Enum,
+    ForeignKey,
+    Integer,
+    String,
+    Table,
+    text,
+    Index,
+    CheckConstraint, PrimaryKeyConstraint,
+)
 from database import Base, str_256, metadata_obj
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 from typing import Annotated
@@ -56,7 +67,9 @@ class ResumesOrm(Base):
     repr_cols = ("created_at",)
 
     __table_args__ = (
-        Index("title_index", )
+        PrimaryKeyConstraint("id", "title"),
+        Index("title_index", "title"),
+        CheckConstraint("compensation > 0", "check_compensation_positive"),
     )
 
 
