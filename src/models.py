@@ -55,6 +55,10 @@ class ResumesOrm(Base):
     repr_cols_num = 4
     repr_cols = ("created_at",)
 
+    __table_args__ = (
+        Index("title_index", )
+    )
+
 
 # Императивный подход
 workers_table = Table(
