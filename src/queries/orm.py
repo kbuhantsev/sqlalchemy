@@ -1,5 +1,5 @@
 from sqlalchemy import Integer, and_, text, insert, inspect, select, func, cast
-from sqlalchemy.orm import aliased
+from sqlalchemy.orm import aliased, session
 from database import (
     sync_engine,
     async_engine,
@@ -209,6 +209,24 @@ class SyncORM:
             res = session.execute(query)
             result = res.all()
             print(f"{len(result)=}. {result=}")
+
+    @staticmethod
+    def select_workers_with_lazy_relatinship():
+        with session_factory() as session:
+            query = (
+                select(WorkersOrm)
+            )
+            res = session.execute(query)
+            result = res.scalars().all()
+
+            worker_1_resumes = result[0].resumes
+            print(worker_1_resumes)
+
+            worker_2_resumes = result[1].resumes
+            print(worker_2_resumes)
+
+            # print(f"{len(result)=}. {result=}")
+
 
 
 class AsyncORM:
