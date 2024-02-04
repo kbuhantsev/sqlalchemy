@@ -103,9 +103,7 @@ class SyncORM:
                     # 1 вариант использования cast
                     # cast(func.avg(ResumesOrm.compensation), Integer).label("avg_compensation"),
                     # 2 вариант использования cast (предпочтительный способ)
-                    func.avg(ResumesOrm.compensation)
-                    .cast(Integer)
-                    .label("avg_compensation"),
+                    func.avg(ResumesOrm.compensation).cast(Integer).label("avg_compensation"),
                 )
                 .select_from(ResumesOrm)
                 .filter(
@@ -284,7 +282,7 @@ class SyncORM:
 
     @staticmethod
     def select_workers_with_relationship_contains_eager_with_limit():
-        # Горячо рекомендую ознакомиться: https://stackoverflow.com/a/72298903/22259413 
+        # Горячо рекомендую ознакомиться: https://stackoverflow.com/a/72298903/22259413
         with session_factory() as session:
             subq = (
                 select(ResumesOrm.id.label("parttime_resume_id"))

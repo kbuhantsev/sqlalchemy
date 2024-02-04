@@ -67,7 +67,7 @@ class ResumesOrm(Base):
     repr_cols = ("created_at",)
 
     __table_args__ = (
-        PrimaryKeyConstraint("id", "title"),
+        # PrimaryKeyConstraint("id", "title"),
         Index("title_index", "title"),
         CheckConstraint("compensation > 0", "check_compensation_positive"),
     )
