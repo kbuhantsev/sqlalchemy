@@ -29,6 +29,8 @@ async def main():
         SyncORM.insert_additional_resumes()
         SyncORM.join_cte_subquery_window_func()
         SyncORM.select_workers_with_lazy_relatinship()
+        SyncORM.select_workers_with_joined_relatinship()
+        SyncORM.select_workers_with_selectin_relatinship()
 
     # ========== ASYNC ==========
     # CORE

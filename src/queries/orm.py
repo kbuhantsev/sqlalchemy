@@ -1,5 +1,5 @@
 from sqlalchemy import Integer, and_, text, insert, inspect, select, func, cast
-from sqlalchemy.orm import aliased, session
+from sqlalchemy.orm import aliased, join, joinedload, selectinload, session
 from database import (
     sync_engine,
     async_engine,
@@ -213,9 +213,7 @@ class SyncORM:
     @staticmethod
     def select_workers_with_lazy_relatinship():
         with session_factory() as session:
-            query = (
-                select(WorkersOrm)
-            )
+            query = select(WorkersOrm)
             res = session.execute(query)
             result = res.scalars().all()
 
@@ -225,8 +223,33 @@ class SyncORM:
             worker_2_resumes = result[1].resumes
             print(worker_2_resumes)
 
-            # print(f"{len(result)=}. {result=}")
+    @staticmethod
+    def select_workers_with_joined_relatinship():
+        """joinedload for m2o o2o"""
+        with session_factory() as session:
+            query = select(WorkersOrm).options(joinedload(WorkersOrm.resumes))
+            res = session.execute(query)
+            result = res.unique().scalars().all()
 
+            worker_1_resumes = result[0].resumes
+            print(worker_1_resumes)
+
+            worker_2_resumes = result[1].resumes
+            print(worker_2_resumes)
+
+    @staticmethod
+    def select_workers_with_selectin_relatinship():
+        """selectinload for o2m m2m"""
+        with session_factory() as session:
+            query = select(WorkersOrm).options(selectinload(WorkersOrm.resumes))
+            res = session.execute(query)
+            result = res.scalars().all()
+
+            worker_1_resumes = result[0].resumes
+            print(worker_1_resumes)
+
+            worker_2_resumes = result[1].resumes
+            print(worker_2_resumes)
 
 
 class AsyncORM:

@@ -44,6 +44,9 @@ class ResumesOrm(Base):
 
     worker: Mapped["WorkersOrm"] = relationship()
 
+    repr_cols_num = 4
+    repr_cols = ("created_at",)
+
 
 # Императивный подход
 workers_table = Table(
