@@ -16,7 +16,6 @@ async def main():
         SyncCore.select_resumes_avg_compensation()
         SyncCore.insert_additional_resumes()
         SyncCore.join_cte_subquery_window_func()
-        
 
     # ORM
     if "--orm" in sys.argv and "--sync" in sys.argv:
@@ -25,12 +24,15 @@ async def main():
         SyncORM.select_workers()
         SyncORM.update_worker()
         SyncORM.insert_resumes()
-        SyncORM.select_resumes_avg_compensation()
+        # SyncORM.select_resumes_avg_compensation()
         SyncORM.insert_additional_resumes()
-        SyncORM.join_cte_subquery_window_func()
-        SyncORM.select_workers_with_lazy_relatinship()
-        SyncORM.select_workers_with_joined_relatinship()
-        SyncORM.select_workers_with_selectin_relatinship()
+        # SyncORM.join_cte_subquery_window_func()
+        # SyncORM.select_workers_with_lazy_relatinship()
+        # SyncORM.select_workers_with_joined_relatinship()
+        # SyncORM.select_workers_with_selectin_relatinship()
+        # SyncORM.select_workers_with_condition_relatinship()
+        # SyncORM.select_workers_with_condition_contains_eager()
+        SyncORM.select_workers_with_relationship_contains_eager_with_limit()
 
     # ========== ASYNC ==========
     # CORE

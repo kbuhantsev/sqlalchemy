@@ -26,14 +26,22 @@ class Workload(enum.Enum):
 
 class WorkersOrm(Base):
     __tablename__ = "workers"
+
     id: Mapped[intpk]
     username: Mapped[str]
 
-    resumes: Mapped[list["ResumesOrm"]] = relationship()
+    resumes: Mapped[list["ResumesOrm"]] = relationship(back_populates="worker")
+
+    resumes_parttime: Mapped[list["ResumesOrm"]] = relationship(
+        back_populates="worker",
+        primaryjoin="and_(WorkersOrm.id == ResumesOrm.worker_id, ResumesOrm.workload == 'parttime')",
+        order_by="ResumesOrm.id.desc()",
+    )
 
 
 class ResumesOrm(Base):
     __tablename__ = "resumes"
+
     id: Mapped[intpk]
     title: Mapped[str_256]
     compensation: Mapped[int | None]
@@ -42,7 +50,7 @@ class ResumesOrm(Base):
     created_at: Mapped[created_at]
     updated_at: Mapped[updated_at]
 
-    worker: Mapped["WorkersOrm"] = relationship()
+    worker: Mapped["WorkersOrm"] = relationship(back_populates="resumes")
 
     repr_cols_num = 4
     repr_cols = ("created_at",)
