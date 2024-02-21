@@ -32,7 +32,7 @@ async def main():
         # SyncORM.select_workers_with_selectin_relatinship()
         # SyncORM.select_workers_with_condition_relatinship()
         # SyncORM.select_workers_with_condition_contains_eager()
-        SyncORM.select_workers_with_relationship_contains_eager_with_limit()
+        # SyncORM.select_workers_with_relationship_contains_eager_with_limit()
 
     # ========== ASYNC ==========
     # CORE
